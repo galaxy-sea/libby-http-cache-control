@@ -2,10 +2,10 @@
 
 - [HTTP cache introduction](#http-cache-introduction)
 - [Getting started](#getting-started)
-    - [maven dependency](#maven-dependency)
-    - [support cache-control And eTag](#support-cache-control-and-etag)
-    - [spel expressions](#spel-expressions)
-    - [support properties](#support-properties)
+  - [maven dependency](#maven-dependency)
+  - [cache-control And eTag](#cache-control-and-etag)
+  - [spel expressions](#spel-expressions)
+  - [properties](#properties)
 - [support Spring Cache Abstraction](#support-spring-cache-abstraction)
 
 <!-- /TOC -->
@@ -26,11 +26,11 @@
 <dependency>
     <groupId>plus.wcj</groupId>
     <artifactId>libby-http-cache-control</artifactId>
-    <version>${last-version}</version>
+    <version>${Latest-version}</version>
 </dependency>
 ```
 
-## support cache-control And eTag
+## cache-control And eTag
 
 ```java
 @RestController
@@ -60,13 +60,13 @@ public class CacheController {
 ```
 ## spel expressions
 
-1. HttpCacheControl
-2. HttpETagBind
+1. @HttpCacheControl
+2. @HttpETagBind
 
-The key() fields of @HttpCacheControl and @HttpETagBind support spel expressions.
+The key() fields of ``@HttpCacheControl`` and ``@HttpETagBind`` support spel expressions.
 Currently, only method parameter list is supported, Return value is not supported.
 
-## support properties
+## properties
 
 ```yaml
 libby:
@@ -96,8 +96,8 @@ see [Cache Abstraction](https://docs.spring.io/spring-framework/docs/current/ref
 @SpringBootApplication
 @EnableCaching
 public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 }
 ```

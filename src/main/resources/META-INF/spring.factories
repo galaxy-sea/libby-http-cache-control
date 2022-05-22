@@ -1,0 +1,5 @@
+# AutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  plus.wcj.libby.http.cache.control.LibbyAutoConfiguration,\
+  plus.wcj.libby.http.cache.control.cache.HaveCacheManagerAutoConfiguration
+

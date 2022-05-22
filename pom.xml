@@ -10,9 +10,11 @@
     </parent>
     <groupId>plus.wcj</groupId>
     <artifactId>libby-http-cache-control</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2022.1.0-SNAPSHOT</version>
     <name>libby-http-cache-control</name>
     <description>libby-http-cache-control</description>
+
+    <url>https://github.com/galaxy-sea/libby-http-cache-control</url>
 
     <licenses>
         <license>
@@ -29,11 +31,19 @@
         </developer>
     </developers>
 
+    <scm>
+        <url>https://github.com/galaxy-sea/libby-http-cache-control</url>
+        <connection>scm:git:git://github.com:galaxy-sea/libby-http-cache-control.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:galaxy-sea/libby-http-cache-control.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -126,7 +136,51 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- id 与 setting.xml 的 gpg 配置中的 id 对应-->
+                        <id>ossrh</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- 与 setting.xml 的 server 配置中的 sonatype-release 对应-->
+                    <serverId>sonatype-release</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <stagingProgressTimeoutMinutes>20</stagingProgressTimeoutMinutes>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-snapshots</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-release</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 </project>

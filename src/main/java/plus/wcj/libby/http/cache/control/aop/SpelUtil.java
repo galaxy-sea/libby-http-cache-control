@@ -15,7 +15,22 @@ public class SpelUtil {
     private static final SpelExpressionParser PARSER = new SpelExpressionParser();
     private static final DefaultParameterNameDiscoverer PARAMETER_NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
 
-    public static String parser(String spelExpression, Method method, Object[] arguments) {
+    public static String parser(Method method, Object[] arguments, String spelExpression) {
+        EvaluationContext context = toEvaluationContext(method, arguments);
+        return PARSER.parseExpression(spelExpression).getValue(context).toString();
+    }
+
+    public static String[] parser(Method method, Object[] arguments, String... spelExpressions) {
+        EvaluationContext context = toEvaluationContext(method, arguments);
+        String[] evaluationResults = new String[spelExpressions.length];
+        for (int i = spelExpressions.length - 1; i >= 0; i--) {
+            String evaluationResult = PARSER.parseExpression(spelExpressions[i]).getValue(context).toString();
+            evaluationResults[i] = evaluationResult;
+        }
+        return evaluationResults;
+    }
+
+    private static EvaluationContext toEvaluationContext(Method method, Object[] arguments) {
         EvaluationContext context = new StandardEvaluationContext();
         if (arguments != null && arguments.length > 0) {
             String[] parameterNames = PARAMETER_NAME_DISCOVERER.getParameterNames(method);
@@ -23,6 +38,6 @@ public class SpelUtil {
                 context.setVariable(parameterNames[i], arguments[i]);
             }
         }
-        return PARSER.parseExpression(spelExpression).getValue(context).toString();
+        return context;
     }
 }

@@ -38,8 +38,10 @@ public class HttpETagAdvice implements AfterReturningAdvice {
 
     @Override
     public void afterReturning(Object returnValue, Method method, Object[] args, Object target) {
-        String spelExpression = method.getAnnotation(HttpETagBind.class).key();
-        String key = SpelUtil.parser(spelExpression, method, args);
-        httpETagCache.put(key);
+        String[] spelExpressions = method.getAnnotation(HttpETagBind.class).key();
+        String[] keys = SpelUtil.parser(method, args, spelExpressions);
+        for (String key : keys) {
+            httpETagCache.put(key);
+        }
     }
 }

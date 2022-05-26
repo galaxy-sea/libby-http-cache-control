@@ -31,5 +31,5 @@ import java.lang.annotation.Target;
 @Documented
 public @interface HttpETagBind {
 
-    String key();
+    String[] key();
 }

@@ -40,6 +40,7 @@ import org.springframework.context.annotation.Role;
  * @since 2022/5/15
  */
 @EnableConfigurationProperties(LibbyControlProperties.class)
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class LibbyAutoConfiguration {
 
 
@@ -67,7 +68,6 @@ public class LibbyAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "httpCacheControlPointcutAdvisor")
-    @ConditionalOnWebApplication
     @Role(RootBeanDefinition.ROLE_INFRASTRUCTURE)
     public Advisor httpCacheControlPointcutAdvisor(HttpETagCache httpETagCache, LibbyControlProperties libbyControlProperties) {
         HttpCacheControlAdvice annotationAdvice = new HttpCacheControlAdvice(httpETagCache, libbyControlProperties);
@@ -76,7 +76,6 @@ public class LibbyAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "httpIfNoneMatchFilter")
-    @ConditionalOnWebApplication
     public HttpIfNoneMatchFilter httpIfNoneMatchFilter(HttpETagCache httpETagCache) {
         return new HttpIfNoneMatchFilter(httpETagCache);
     }

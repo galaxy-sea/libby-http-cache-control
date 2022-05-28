@@ -10,9 +10,13 @@
     </parent>
     <groupId>plus.wcj</groupId>
     <artifactId>libby-http-cache-control</artifactId>
-    <version>2022.1.1-SNAPSHOT</version>
+    <version>2022.1.2-SNAPSHOT</version>
     <name>libby-http-cache-control</name>
-    <description>libby-http-cache-control</description>
+    <description>
+        By reusing previously acquired resources, you can significantly improve the performance of websites and applications.
+        Web caching reduces latency and network traffic, thereby reducing the time required to display resource representations.
+        Become more responsive by using HTTP caching
+    </description>
 
     <url>https://github.com/galaxy-sea/libby-http-cache-control</url>
 
@@ -39,6 +43,9 @@
     </scm>
 
     <properties>
+
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
+
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -57,10 +64,24 @@
         </dependency>
 
         <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -73,6 +94,18 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

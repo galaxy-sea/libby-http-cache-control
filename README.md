@@ -1,28 +1,31 @@
 <!-- TOC -->
 
-- [HTTP cache introduction](#http-cache-introduction)
-- [Getting started](#getting-started)
-  - [maven dependency](#maven-dependency)
-  - [cache-control And eTag](#cache-control-and-etag)
-  - [spel expressions](#spel-expressions)
-  - [properties](#properties)
-- [support Spring Cache Abstraction](#support-spring-cache-abstraction)
+- [1. HTTP cache introduction](#1-http-cache-introduction)
+- [2. Getting started](#2-getting-started)
+    - [2.1. maven dependency](#21-maven-dependency)
+- [3. Spring MVC](#3-spring-mvc)
+    - [3.1. cache-control And eTag](#31-cache-control-and-etag)
+    - [3.2. spel expressions](#32-spel-expressions)
+    - [3.3. properties](#33-properties)
+    - [3.4. support Spring Cache Abstraction](#34-support-spring-cache-abstraction)
+- [4. OpenFeign](#4-openfeign)
+    - [4.1. support clients cache](#41-support-clients-cache)
+    - [4.2. properties](#42-properties)
 
 <!-- /TOC -->
 
-
-# HTTP cache introduction
-
+# 1. HTTP cache introduction
 
 - [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
 - [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
 - [Prevent unnecessary network requests with the HTTP Cache](https://web.dev/http-cache/)
 
-# Getting started
+# 2. Getting started
 
-## maven dependency
+## 2.1. maven dependency
 
 ```xml
+
 <dependency>
     <groupId>plus.wcj</groupId>
     <artifactId>libby-http-cache-control</artifactId>
@@ -30,16 +33,19 @@
 </dependency>
 ```
 
-## cache-control And eTag
+# 3. Spring MVC
+
+## 3.1. cache-control And eTag
 
 ```java
+
 @RestController
 @RequestMapping
 public class CacheController {
     private Map<String, Long> data = new HashMap<>();
 
     @GetMapping("cache/{id}")
-    @HttpCacheControl(key = "#id",value = "max-age=10, public")
+    @HttpCacheControl(key = "#id", value = "max-age=10, public")
     public Long get(@PathVariable String id) {
         return data.computeIfAbsent(id, s -> System.currentTimeMillis());
     }
@@ -58,7 +64,8 @@ public class CacheController {
     }
 }
 ```
-## spel expressions
+
+## 3.2. spel expressions
 
 1. @HttpCacheControl
 2. @HttpETagBind
@@ -66,7 +73,7 @@ public class CacheController {
 The key() fields of ``@HttpCacheControl`` and ``@HttpETagBind`` support spel expressions.
 Currently, only method parameter list is supported, Return value is not supported.
 
-## properties
+## 3.3. properties
 
 ```yaml
 libby:
@@ -88,16 +95,36 @@ weight sort
 
 properties value field < properties Other fields < @HttpCacheControl value field < @HttpCacheControl Other fields
 
-# support Spring Cache Abstraction
+## 3.4. support Spring Cache Abstraction
 
 see [Cache Abstraction](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache)
 
 ```java
+
 @SpringBootApplication
 @EnableCaching
 public class Application {
-  public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
+```
+
+# 4. OpenFeign
+
+## 4.1. support clients cache
+
+| client       | support | version  | cache type |
+| ------------ | ------- | -------- |------------|
+| OkHttp       | Yes     | [2022.1.2) | disk       |
+| java.net.URL | No      | -        | -          |
+| Apache HTTP  | No      | -        | -          |
+| Apache HC5   | No      | -        | -          |
+
+## 4.2. properties
+
+```yaml
+libby:
+  http-client-cache-path: "./httpCache"
+  http-client-cache-max-size: 2105131412
 ```

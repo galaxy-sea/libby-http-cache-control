@@ -35,4 +35,8 @@ public class LibbyControlProperties {
     private long staleIfError = 0;
 
     private long sMaxAge = 0;
+
+    private String httpClientCachePath = "./libby";
+
+    private long httpClientCacheMaxSize = 2105131412L;
 }

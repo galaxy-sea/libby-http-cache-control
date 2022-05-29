@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.commons.httpclient.HttpClientConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 
@@ -22,7 +23,8 @@ import java.io.File;
 @ConditionalOnProperty(name = "spring.cloud.httpclientfactories.ok.enabled", matchIfMissing = true)
 @ConditionalOnClass(OkHttpClient.class)
 @AutoConfigureBefore(HttpClientConfiguration.class)
-public class OkHttpClientConfiguration {
+@Configuration(proxyBeanMethods = false)
+public class LibbyOkHttpClientConfiguration {
 
 
     @Bean

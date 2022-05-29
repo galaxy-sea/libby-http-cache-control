@@ -10,7 +10,7 @@
     </parent>
     <groupId>plus.wcj</groupId>
     <artifactId>libby-http-cache-control</artifactId>
-    <version>2022.1.3-SNAPSHOT</version>
+    <version>2022.1.4-SNAPSHOT</version>
     <name>libby-http-cache-control</name>
     <description>
         By reusing previously acquired resources, you can significantly improve the performance of websites and applications.

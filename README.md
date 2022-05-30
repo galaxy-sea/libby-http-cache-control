@@ -2,20 +2,24 @@
 
 - [1. HTTP cache introduction](#1-http-cache-introduction)
 - [2. Getting started](#2-getting-started)
-  - [2.1. maven dependency](#21-maven-dependency)
+    - [2.1. maven dependency](#21-maven-dependency)
 - [3. Spring MVC](#3-spring-mvc)
-  - [3.1. cache-control And eTag](#31-cache-control-and-etag)
-  - [3.2. spel expressions](#32-spel-expressions)
-  - [3.3. properties](#33-properties)
-  - [3.4. support Spring Cache Abstraction](#34-support-spring-cache-abstraction)
-- [4. OpenFeign](#4-openfeign)
-  - [4.1. OkHttp](#41-okhttp)
-  - [4.2. Apache HTTP](#42-apache-http)
+    - [3.1. cache-control And eTag](#31-cache-control-and-etag)
+    - [3.2. spel expressions](#32-spel-expressions)
+    - [3.3. properties](#33-properties)
+    - [3.4. support Spring Cache Abstraction](#34-support-spring-cache-abstraction)
+- [4. Spring Cloud OpenFeign clients](#4-spring-cloud-openfeign-clients)
+    - [4.1. OkHttp](#41-okhttp)
+    - [4.2. Apache HTTP](#42-apache-http)
+    - [4.3. Apache HC5](#43-apache-hc5)
 
 <!-- /TOC -->
 
 
-[![Maven Central](https://img.shields.io/maven-central/v/plus.wcj/libby-http-cache-control?style=flat-square)](https://repo1.maven.org/maven2/plus/wcj/libby-http-cache-control/)
+[![Maven Central](https://img.shields.io/maven-central/v/plus.wcj/libby-http-cache-control?color=3498db&style=flat-square)](https://repo1.maven.org/maven2/plus/wcj/libby-http-cache-control/)
+[![JDK](https://img.shields.io/badge/JDK-1.8-4343?style=flat-square)](https://openjdk.java.net/projects/jdk8/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.x.x-2ecc71?style=flat-square)](https://spring.io/projects/spring-boot)
+[![Spring Cloud OpenFeign](https://img.shields.io/badge/Spring%20Cloud%20OpenFeign-3.x.x-2ecc71?style=flat-square)](https://spring.io/projects/spring-cloud-openfeign#learn)
 [![license](https://img.shields.io/github/license/galaxy-sea/libby-http-cache-control?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # 1. HTTP cache introduction
@@ -116,14 +120,14 @@ public class Application {
 }
 ```
 
-# 4. OpenFeign
+# 4. Spring Cloud OpenFeign clients
 
-| client       | support |  cache type   |default cache type |
-| ------------ |---------|--------------|------------|
-| OkHttp       | Yes     |  disk         | disk       |
-| Apache HTTP  | yes     |  disk, memory | memory          |
-| java.net.URL | No      |  -            | -          |
-| Apache HC5   | No      |  -            | -          |
+| client       | support | cache type   | default cache type |
+|--------------|---------|--------------|--------------------|
+| OkHttp       | Yes     | disk         | disk               |
+| Apache HTTP  | yes     | disk, memory | memory             |
+| Apache HC5   | yes     | disk, memory | memory             |
+| java.net.URL | No      | -            | -                  |
 
 ## 4.1. OkHttp
 
@@ -167,6 +171,35 @@ feign:
     enabled: true
 libby:
   httpclient:
+    cache-type: MEMORY
+    cache-directory: "./libby"
+    max-object-size: 210513
+    max-cache-entries: 1412
+
+```
+
+## 4.3. Apache HC5
+
+``` xml
+  <dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-hc5</artifactId>
+    <optional>true</optional>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.httpcomponents.client5</groupId>
+    <artifactId>httpclient5-cache</artifactId>
+    <optional>true</optional>
+  </dependency>
+```
+
+```yaml
+feign:
+  httpclient:
+    enabled: true
+libby:
+  httpclient5:
     cache-type: MEMORY
     cache-directory: "./libby"
     max-object-size: 210513

@@ -4,5 +4,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   plus.wcj.libby.http.cache.control.LibbyServletAutoConfiguration,\
   plus.wcj.libby.http.cache.control.cache.HaveCacheManagerAutoConfiguration,\
   plus.wcj.libby.http.cache.control.clientconfig.LibbyOkHttpClientConfiguration,\
-  plus.wcj.libby.http.cache.control.clientconfig.LibbyHttpClientConfiguration
+  plus.wcj.libby.http.cache.control.clientconfig.LibbyHttpClientConfiguration,\
+  plus.wcj.libby.http.cache.control.clientconfig.LibbyHttpClient5FeignConfiguration
 

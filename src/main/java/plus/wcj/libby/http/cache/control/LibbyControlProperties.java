@@ -55,6 +55,8 @@ public class LibbyControlProperties {
 
     private Httpclient httpclient = new Httpclient();
 
+    private Httpclient5 httpclient5 = new Httpclient5();
+
     @Data
     public static class OkHttp {
         /** Returns the directory where this cache stores its data. */
@@ -65,6 +67,17 @@ public class LibbyControlProperties {
 
     @Data
     public static class Httpclient {
+        private CacheType cacheType = CacheType.MEMORY;
+        /** Returns the directory where this cache stores its data. */
+        private String cacheDirectory = "./libby";
+        /** Specifies the maximum response body bytes size that will be eligible for caching. */
+        private long maxObjectSize = 210513;
+        /** Sets the maximum number of cache entries the cache will retain. */
+        private int maxCacheEntries = 1412;
+    }
+
+    @Data
+    public static class Httpclient5 {
         private CacheType cacheType = CacheType.MEMORY;
         /** Returns the directory where this cache stores its data. */
         private String cacheDirectory = "./libby";

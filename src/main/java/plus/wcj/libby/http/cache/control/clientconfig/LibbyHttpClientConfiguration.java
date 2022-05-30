@@ -45,22 +45,19 @@ import java.io.IOException;
 @ConditionalOnClass(value = HttpClient.class, name = "org.apache.http.impl.client.cache.CachingHttpClientBuilder")
 public class LibbyHttpClientConfiguration {
 
-
-
     @Bean
     @ConditionalOnMissingBean
     public HttpClientBuilder apacheHttpClientBuilder(CacheConfig cacheConfig, LibbyControlProperties libbyControlProperties) throws IOException {
 
-        CachingHttpClientBuilder builder = CachingHttpClientBuilder.create()
-                                                                   .setCacheConfig(cacheConfig);
-
+        File file = null;
         LibbyControlProperties.Httpclient httpclient = libbyControlProperties.getHttpclient();
         if (LibbyControlProperties.CacheType.FILE.equals(httpclient.getCacheType())) {
-            File file = new File(httpclient.getCacheDirectory());
+            file = new File(httpclient.getCacheDirectory());
             file.mkdirs();
-            builder.setCacheDir(file);
         }
-        return builder;
+        return CachingHttpClientBuilder.create()
+                                       .setCacheDir(file)
+                                       .setCacheConfig(cacheConfig);
     }
 
     @Bean

@@ -10,7 +10,7 @@
     </parent>
     <groupId>plus.wcj</groupId>
     <artifactId>libby-http-cache-control</artifactId>
-    <version>2022.1.4-SNAPSHOT</version>
+    <version>2022.1.4</version>
     <name>libby-http-cache-control</name>
     <description>
         By reusing previously acquired resources, you can significantly improve the performance of websites and applications.
@@ -66,6 +66,30 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient-cache</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-hc5</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5-cache</artifactId>
             <optional>true</optional>
         </dependency>
 

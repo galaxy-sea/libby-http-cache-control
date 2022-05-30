@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package plus.wcj.libby.http.cache.control.clientconfig;
 
-import okhttp3.Cache;
-import okhttp3.OkHttpClient;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.cache.CacheConfig;
+import org.apache.http.impl.client.cache.CachingHttpClientBuilder;
 import plus.wcj.libby.http.cache.control.LibbyControlProperties;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -29,31 +32,45 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author changjin wei(魏昌进)
- * @since 2022/5/28
+ * @since 2022/5/29
  */
 @EnableConfigurationProperties(LibbyControlProperties.class)
-@ConditionalOnProperty(name = "spring.cloud.httpclientfactories.ok.enabled", matchIfMissing = true)
-@ConditionalOnClass(OkHttpClient.class)
 @AutoConfigureBefore(HttpClientConfiguration.class)
 @Configuration(proxyBeanMethods = false)
-public class LibbyOkHttpClientConfiguration {
+@ConditionalOnProperty(name = "spring.cloud.httpclientfactories.apache.enabled", matchIfMissing = true)
+@ConditionalOnClass(value = HttpClient.class, name = "org.apache.http.impl.client.cache.CachingHttpClientBuilder")
+public class LibbyHttpClientConfiguration {
+
 
 
     @Bean
     @ConditionalOnMissingBean
-    public OkHttpClient.Builder okHttpClientBuilder(Cache okhttp3Cache) {
-        return new OkHttpClient.Builder().cache(okhttp3Cache);
+    public HttpClientBuilder apacheHttpClientBuilder(CacheConfig cacheConfig, LibbyControlProperties libbyControlProperties) throws IOException {
+
+        CachingHttpClientBuilder builder = CachingHttpClientBuilder.create()
+                                                                   .setCacheConfig(cacheConfig);
+
+        LibbyControlProperties.Httpclient httpclient = libbyControlProperties.getHttpclient();
+        if (LibbyControlProperties.CacheType.FILE.equals(httpclient.getCacheType())) {
+            File file = new File(httpclient.getCacheDirectory());
+            file.mkdirs();
+            builder.setCacheDir(file);
+        }
+        return builder;
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public Cache okhttp3Cache(LibbyControlProperties libbyControlProperties) {
-        LibbyControlProperties.OkHttp okHttp = libbyControlProperties.getOkHttp();
-        return new Cache(new File(okHttp.getCacheDirectory()), okHttp.getCacheMaxSize());
+    public CacheConfig cacheConfig(LibbyControlProperties libbyControlProperties) {
+        LibbyControlProperties.Httpclient httpclient = libbyControlProperties.getHttpclient();
+        return CacheConfig.custom()
+                          .setMaxCacheEntries(httpclient.getMaxCacheEntries())
+                          .setMaxObjectSize(httpclient.getMaxObjectSize())
+                          .build();
     }
-
 
 }

@@ -52,7 +52,6 @@ public class LibbyServletAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "httpIfNoneMatchFilter")
-    @ConditionalOnNotWebApplication
     public HttpIfNoneMatchFilter httpIfNoneMatchFilter(HttpETagCache httpETagCache) {
         return new HttpIfNoneMatchFilter(httpETagCache);
     }

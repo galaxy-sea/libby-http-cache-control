@@ -51,7 +51,34 @@ public class LibbyControlProperties {
 
     private long sMaxAge = 0;
 
-    private String httpClientCachePath = "./libby";
+    private OkHttp okHttp = new OkHttp();
 
-    private long httpClientCacheMaxSize = 2105131412L;
+    private Httpclient httpclient = new Httpclient();
+
+    @Data
+    public static class OkHttp {
+        /** Returns the directory where this cache stores its data. */
+        private String cacheDirectory = "./libby";
+        /** Returns the maximum number of bytes that this cache should use to store its data. */
+        private long cacheMaxSize = 2105131412L;
+    }
+
+    @Data
+    public static class Httpclient {
+        private CacheType cacheType = CacheType.MEMORY;
+        /** Returns the directory where this cache stores its data. */
+        private String cacheDirectory = "./libby";
+        /** Specifies the maximum response body bytes size that will be eligible for caching. */
+        private long maxObjectSize = 210513;
+        /** Sets the maximum number of cache entries the cache will retain. */
+        private int maxCacheEntries = 1412;
+    }
+
+    public enum CacheType {
+        /** jvm memory */
+        MEMORY,
+        /** os File */
+        FILE;
+    }
+
 }

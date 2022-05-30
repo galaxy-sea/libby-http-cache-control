@@ -120,17 +120,58 @@ public class Application {
 
 ## 4.1. support clients cache
 
-| client       | support | version  | cache type |
-| ------------ | ------- | -------- |------------|
-| OkHttp       | Yes     | [2022.1.2) | disk       |
-| java.net.URL | No      | -        | -          |
-| Apache HTTP  | No      | -        | -          |
-| Apache HC5   | No      | -        | -          |
+| client       | support |  cache type   |default cache type |
+| ------------ |---------|--------------|------------|
+| OkHttp       | Yes     |  disk         | disk       |
+| Apache HTTP  | yes     |  disk, memory | memory          |
+| java.net.URL | No      |  -            | -          |
+| Apache HC5   | No      |  -            | -          |
 
-## 4.2. properties
+## 4.2. OkHttp
+
+``` xml
+  <dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-okhttp</artifactId>
+    <version>${version}</version>
+  </dependency>
+```
 
 ```yaml
+feign:
+  okhttp:
+    enabled: true
 libby:
-  http-client-cache-path: "./httpCache"
-  http-client-cache-max-size: 2105131412
+  ok-http:
+    cache-directory: "./libby"
+    cache-max-size: 2105131412
+```
+
+## 4.2. Apache HTTP
+
+``` xml
+  <dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-httpclient</artifactId>
+    <version>${version}</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient-cache</artifactId>
+    <version>${version}</version>
+  </dependency>
+```
+
+```yaml
+feign:
+  httpclient:
+    enabled: true
+libby:
+  httpclient:
+    cache-type: MEMORY
+    cache-directory: "./libby"
+    max-object-size: 210513
+    max-cache-entries: 1412
+
 ```

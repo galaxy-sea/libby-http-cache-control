@@ -184,13 +184,13 @@ libby:
   <dependency>
     <groupId>io.github.openfeign</groupId>
     <artifactId>feign-hc5</artifactId>
-    <optional>true</optional>
+    <version>${version}</version>
   </dependency>
 
   <dependency>
     <groupId>org.apache.httpcomponents.client5</groupId>
     <artifactId>httpclient5-cache</artifactId>
-    <optional>true</optional>
+    <version>${version}</version>
   </dependency>
 ```
 

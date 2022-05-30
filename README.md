@@ -2,21 +2,21 @@
 
 - [1. HTTP cache introduction](#1-http-cache-introduction)
 - [2. Getting started](#2-getting-started)
-    - [2.1. maven dependency](#21-maven-dependency)
+  - [2.1. maven dependency](#21-maven-dependency)
 - [3. Spring MVC](#3-spring-mvc)
-    - [3.1. cache-control And eTag](#31-cache-control-and-etag)
-    - [3.2. spel expressions](#32-spel-expressions)
-    - [3.3. properties](#33-properties)
-    - [3.4. support Spring Cache Abstraction](#34-support-spring-cache-abstraction)
+  - [3.1. cache-control And eTag](#31-cache-control-and-etag)
+  - [3.2. spel expressions](#32-spel-expressions)
+  - [3.3. properties](#33-properties)
+  - [3.4. support Spring Cache Abstraction](#34-support-spring-cache-abstraction)
 - [4. OpenFeign](#4-openfeign)
-    - [4.1. support clients cache](#41-support-clients-cache)
-    - [4.2. properties](#42-properties)
+  - [4.1. OkHttp](#41-okhttp)
+  - [4.2. Apache HTTP](#42-apache-http)
 
 <!-- /TOC -->
 
 
 [![Maven Central](https://img.shields.io/maven-central/v/plus.wcj/libby-http-cache-control?style=flat-square)](https://repo1.maven.org/maven2/plus/wcj/libby-http-cache-control/)
-[![license](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
+[![license](https://img.shields.io/github/license/galaxy-sea/libby-http-cache-control?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # 1. HTTP cache introduction
 
@@ -118,8 +118,6 @@ public class Application {
 
 # 4. OpenFeign
 
-## 4.1. support clients cache
-
 | client       | support |  cache type   |default cache type |
 | ------------ |---------|--------------|------------|
 | OkHttp       | Yes     |  disk         | disk       |
@@ -127,7 +125,7 @@ public class Application {
 | java.net.URL | No      |  -            | -          |
 | Apache HC5   | No      |  -            | -          |
 
-## 4.2. OkHttp
+## 4.1. OkHttp
 
 ``` xml
   <dependency>

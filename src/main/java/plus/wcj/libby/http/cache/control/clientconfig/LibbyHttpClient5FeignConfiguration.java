@@ -37,6 +37,7 @@ import org.apache.hc.core5.util.Timeout;
 import plus.wcj.libby.http.cache.control.LibbyControlProperties;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.clientconfig.HttpClient5FeignConfiguration;
@@ -64,6 +65,7 @@ import java.util.concurrent.TimeUnit;
 @AutoConfigureBefore(HttpClient5FeignConfiguration.class)
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnMissingBean(CloseableHttpClient.class)
+@ConditionalOnClass(name = "org.apache.hc.client5.http.impl.cache.CachingHttpClients")
 public class LibbyHttpClient5FeignConfiguration {
 
     private static final Log LOG = LogFactory.getLog(HttpClient5FeignConfiguration.class);

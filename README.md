@@ -17,7 +17,7 @@
 
 
 [![Maven Central](https://img.shields.io/maven-central/v/plus.wcj/libby-http-cache-control?color=3498db&style=flat-square)](https://repo1.maven.org/maven2/plus/wcj/libby-http-cache-control/)
-[![JDK](https://img.shields.io/badge/JDK-1.8-4343?style=flat-square)](https://openjdk.java.net/projects/jdk8/)
+[![JDK](https://img.shields.io/badge/JDK-1.8+-4343?style=flat-square)](https://openjdk.java.net/projects/jdk8/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.x.x-2ecc71?style=flat-square)](https://spring.io/projects/spring-boot)
 [![Spring Cloud OpenFeign](https://img.shields.io/badge/Spring%20Cloud%20OpenFeign-3.x.x-2ecc71?style=flat-square)](https://spring.io/projects/spring-cloud-openfeign#learn)
 [![license](https://img.shields.io/github/license/galaxy-sea/libby-http-cache-control?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)

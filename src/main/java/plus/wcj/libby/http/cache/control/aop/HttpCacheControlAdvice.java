@@ -22,6 +22,7 @@ import plus.wcj.libby.http.cache.control.annotation.HttpCacheControl;
 import plus.wcj.libby.http.cache.control.cache.HttpETagCache;
 
 import org.springframework.aop.AfterReturningAdvice;
+import org.springframework.expression.EvaluationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -51,12 +52,16 @@ public class HttpCacheControlAdvice implements AfterReturningAdvice {
     public void afterReturning(Object returnValue, Method method, Object[] args, Object target) {
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         HttpCacheControl httpCacheControl = method.getAnnotation(HttpCacheControl.class);
-        String spelExpression = httpCacheControl.key();
-        String cacheControl = toCacheControlValue(httpCacheControl);
-        String key = SpelUtil.parser(method, args, spelExpression);
-        String eTag = httpETagCache.getOrDefault(key);
-        response.setHeader(HttpHeaders.ETAG, eTag);
-        response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControl);
+        String condition = httpCacheControl.condition();
+        EvaluationContext context = SpelUtil.toEvaluationContext(method, args);
+        if (SpelUtil.condition(condition, context)) {
+            String spelExpression = httpCacheControl.key();
+            String key = SpelUtil.parser(spelExpression, context);
+            String eTag = httpETagCache.getOrDefault(key);
+            String cacheControl = toCacheControlValue(httpCacheControl);
+            response.setHeader(HttpHeaders.ETAG, eTag);
+            response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControl);
+        }
     }
 
 

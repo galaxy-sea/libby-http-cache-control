@@ -21,6 +21,7 @@ import plus.wcj.libby.http.cache.control.annotation.HttpETagBind;
 import plus.wcj.libby.http.cache.control.cache.HttpETagCache;
 
 import org.springframework.aop.AfterReturningAdvice;
+import org.springframework.expression.EvaluationContext;
 
 import java.lang.reflect.Method;
 
@@ -38,10 +39,15 @@ public class HttpETagAdvice implements AfterReturningAdvice {
 
     @Override
     public void afterReturning(Object returnValue, Method method, Object[] args, Object target) {
-        String[] spelExpressions = method.getAnnotation(HttpETagBind.class).key();
-        String[] keys = SpelUtil.parser(method, args, spelExpressions);
-        for (String key : keys) {
-            httpETagCache.put(key);
+        HttpETagBind httpETagBind = method.getAnnotation(HttpETagBind.class);
+        String condition = httpETagBind.condition();
+        EvaluationContext context = SpelUtil.toEvaluationContext(method, args);
+        if (SpelUtil.condition(condition, context)) {
+            String[] spelExpressions = httpETagBind.key();
+            String[] keys = SpelUtil.parser(context, spelExpressions);
+            for (String key : keys) {
+                httpETagCache.put(key);
+            }
         }
     }
 }

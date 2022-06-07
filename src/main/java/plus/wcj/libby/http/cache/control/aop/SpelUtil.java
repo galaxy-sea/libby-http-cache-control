@@ -19,6 +19,7 @@ import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 
@@ -30,22 +31,27 @@ public class SpelUtil {
     private static final SpelExpressionParser PARSER = new SpelExpressionParser();
     private static final DefaultParameterNameDiscoverer PARAMETER_NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
 
-    public static String parser(Method method, Object[] arguments, String spelExpression) {
-        EvaluationContext context = toEvaluationContext(method, arguments);
-        return PARSER.parseExpression(spelExpression).getValue(context).toString();
+    public static boolean condition(String condition, EvaluationContext context) {
+        return StringUtils.hasText(condition)
+                ? PARSER.parseExpression(condition).getValue(context, boolean.class)
+                : false;
     }
 
-    public static String[] parser(Method method, Object[] arguments, String... spelExpressions) {
-        EvaluationContext context = toEvaluationContext(method, arguments);
+
+    public static String parser(String spelExpression, EvaluationContext context) {
+        return PARSER.parseExpression(spelExpression).getValue(context, String.class);
+    }
+
+    public static String[] parser(EvaluationContext context, String... spelExpressions) {
         String[] evaluationResults = new String[spelExpressions.length];
         for (int i = spelExpressions.length - 1; i >= 0; i--) {
-            String evaluationResult = PARSER.parseExpression(spelExpressions[i]).getValue(context).toString();
+            String evaluationResult = PARSER.parseExpression(spelExpressions[i]).getValue(context, String.class);
             evaluationResults[i] = evaluationResult;
         }
         return evaluationResults;
     }
 
-    private static EvaluationContext toEvaluationContext(Method method, Object[] arguments) {
+    public static EvaluationContext toEvaluationContext(Method method, Object[] arguments) {
         EvaluationContext context = new StandardEvaluationContext();
         if (arguments != null && arguments.length > 0) {
             String[] parameterNames = PARAMETER_NAME_DISCOVERER.getParameterNames(method);

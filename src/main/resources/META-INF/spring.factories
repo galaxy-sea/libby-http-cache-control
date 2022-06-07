@@ -1,3 +1,4 @@
+# .-..  ..  -...  -...  -.--  --..--   ..  .----.  --   .-  -.   .-  ...  ...  ....  ---  .-..  .
 # AutoConfiguration
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   plus.wcj.libby.http.cache.control.LibbyETagAutoConfiguration,\

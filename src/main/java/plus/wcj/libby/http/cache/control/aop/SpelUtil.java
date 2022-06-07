@@ -32,7 +32,7 @@ public class SpelUtil {
     private static final DefaultParameterNameDiscoverer PARAMETER_NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
 
     public static boolean condition(String condition, EvaluationContext context) {
-        return StringUtils.hasText(condition)
+        return "".equals(condition) || StringUtils.hasText(condition)
                 ? PARSER.parseExpression(condition).getValue(context, boolean.class)
                 : false;
     }

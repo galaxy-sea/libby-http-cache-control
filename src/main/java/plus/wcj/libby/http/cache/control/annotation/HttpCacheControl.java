@@ -37,6 +37,8 @@ public @interface HttpCacheControl {
 
     String value() default "";
 
+    String condition() default "";
+
     long maxAge() default 0;
 
     boolean noCache() default false;

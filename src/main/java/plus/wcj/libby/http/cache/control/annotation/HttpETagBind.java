@@ -32,4 +32,6 @@ import java.lang.annotation.Target;
 public @interface HttpETagBind {
 
     String[] key();
+
+    String condition() default "";
 }

@@ -103,7 +103,7 @@ libby:
 
 weight sort
 
-properties value field < properties Other fields < @HttpCacheControl value field < @HttpCacheControl Other fields
+properties value field ``<`` properties Other fields ``<`` @HttpCacheControl value field ``<`` @HttpCacheControl Other fields
 
 ## 3.4. support Spring Cache Abstraction
 
@@ -122,12 +122,15 @@ public class Application {
 
 # 4. Spring Cloud OpenFeign clients
 
-| client       | support | cache type   | default cache type |
-|--------------|---------|--------------|--------------------|
-| OkHttp       | Yes     | disk         | disk               |
-| Apache HTTP  | yes     | disk, memory | memory             |
-| Apache HC5   | yes     | disk, memory | memory             |
-| java.net.URL | No      | -            | -                  |
+| client           | support | cache type   | default cache type |
+|------------------|---------|--------------|--------------------|
+| OkHttp           | Yes     | disk         | disk               |
+| Apache HTTP      | yes     | disk, memory | memory             |
+| Apache HC5       | yes     | disk, memory | memory             |
+| ~~java.net.URL~~ | No      | -            | -                  |
+
+``java.net.URL`` is not supported because of its low performance
+
 
 ## 4.1. OkHttp
 
